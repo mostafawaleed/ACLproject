@@ -18,9 +18,9 @@ mongoose
 
 const user = require("./routes/api/user");
 const course = require("./routes/api/course");
-app.use(cors());
+//app.use(cors());
 app.use("/api/user", user);
-app.use("/api/course", course);
+//app.use("/api/course", course);
 
 const port = 3000;
 app.get("/", (req, res) => {

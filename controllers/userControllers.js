@@ -1,19 +1,9 @@
 const User = require("../models/user");
 
 exports.createUser = (req, res) => {
-  User.findOne({ email: req.body.email })
+  User.create(req.body)
     .then(user => {
-      if (user) {
-        return res.status(400).send("this user already exists");
-      }
-      User.create(req.body)
-        .then(user => {
-          return res.json({ data: user });
-        })
-        .catch(err => {
-          console.log(err);
-          res.sendStatus(500);
-        });
+      return res.json({ msg: "User created", data: user });
     })
     .catch(err => {
       console.log(err);

@@ -3,7 +3,7 @@ const User = require("../models/user");
 exports.createUser = (req, res) => {
   User.create(req.body)
     .then(user => {
-      return res.json({ msg: "User created", data: user });
+      return res.json({ data: user });
     })
     .catch(err => {
       console.log(err);

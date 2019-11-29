@@ -8,10 +8,11 @@ exports.createCourse = (req, res) => {
   course.instructor = instructor;
   course.creditHours = creditHours;
   course.Slots = Slots;
+
   Courses.create(course)
     .then(course => {
       User.findByIdAndUpdate(
-        { _id: course.instructor },
+        { _id: instructor },
         { $push: { courses: course._id } }
       );
     })
@@ -52,6 +53,8 @@ exports.updateCourse = (req, res) => {
     });
 };
 exports.viewCourse = (req, res) => {
+  let { name, _id } = Courses.findById(req.params.id);
+  console.log(name);
   Courses.findById(req.params.id)
     .then(course => {
       if (!course) return res.status(404).send("course not found");

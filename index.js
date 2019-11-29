@@ -18,14 +18,14 @@ mongoose
 
 const user = require("./routes/api/user");
 const course = require("./routes/api/course");
-//app.use(cors());
-app.use("/api/user", user);
-//app.use("/api/course", course);
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-const port = 3000;
-app.get("/", (req, res) => {
-  res.send("mostafa");
-});
+app.use("/api/user", user);
+app.use("/api/course", course);
+
+const port = 3001;
 app.listen(port, () =>
   console.log(`Server is up and running on server ${port}`)
 );

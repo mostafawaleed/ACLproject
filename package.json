@@ -1,7 +1,6 @@
 {
   "name": "ezsched",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,5 +15,15 @@
     "nodemon": "^2.0.1",
     "nose": "^0.1.0",
     "passport": "^0.4.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mostafawaleed/ACLproject.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mostafawaleed/ACLproject/issues"
+  },
+  "homepage": "https://github.com/mostafawaleed/ACLproject#readme",
+  "description": ""
 }

@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const SlotSchema = new Schema({
-  date: {
-    type: Date,
-    required: true
-  },
   startTime: {
     type: Date,
     required: true

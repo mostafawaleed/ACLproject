@@ -1,29 +1,19 @@
 var Courses = require("../models/courses");
 var User = require("../models/user");
 
-exports.createCourse = (req, res) => {
-  let { name, instructor, creditHours, Slots } = req.body;
-  let course = {};
-  course.name = name;
-  course.instructor = instructor;
-  course.creditHours = creditHours;
-  course.Slots = Slots;
-
-  Courses.create(course)
-    .then(course => {
-      User.findByIdAndUpdate(
-        { _id: instructor },
-        { $push: { courses: course._id } }
-      );
-    })
-    .catch(err => {
-      console.log(
-        "Internal server error while creating course: \n",
-        err,
-        "\n\n"
-      );
-      return res.sendStatus(500);
-    });
+exports.createCourse = async (req, res) => {
+  // const another = Courses.findOne({ name: req.body.name });
+  // console.log(another);
+  // console.log("----------------------------------------------------------");
+  // if (another) res.send("this name is already taken");
+  // const arrayOfSlots = Courses.find({});
+  // //console.log(arrayOfSlots);
+  const course = await Courses.create(req.body);
+  const instructor = await User.findOneAndUpdate(
+    { _id: course.instructor },
+    { $push: { courses: course._id } }
+  );
+  res.json({ instructor: instructor }), { course: course };
 };
 exports.deleteCourse = async (req, res) => {
   const courseId = req.params.id;
@@ -36,10 +26,16 @@ exports.deleteCourse = async (req, res) => {
     return res.status(404).send({ error: "Instructor not found " });
   }
   const index = TheInstructor.courses.indexOf(courseId);
+  console.log(index);
   var deletedCourse1 = TheInstructor.courses.splice(index, 1);
-  await User.findByIdAndUpdate(deletedCourse1.instructor, {
-    $pull: { courses: deletedCourse[0] }
-  });
+  console.log(deletedCourse1);
+  const deletedFromUser = await User.findByIdAndUpdate(
+    deletedCourse.instructor,
+    {
+      $pull: { courses: deletedCourse1[0] }
+    }
+  );
+  res.json(deletedFromUser);
 };
 exports.updateCourse = (req, res) => {
   Courses.findByIdAndUpdate(req.params.id, req.body, { new: true })
@@ -53,8 +49,6 @@ exports.updateCourse = (req, res) => {
     });
 };
 exports.viewCourse = (req, res) => {
-  let { name, _id } = Courses.findById(req.params.id);
-  console.log(name);
   Courses.findById(req.params.id)
     .then(course => {
       if (!course) return res.status(404).send("course not found");

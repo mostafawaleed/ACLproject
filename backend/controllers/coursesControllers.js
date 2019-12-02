@@ -2,18 +2,14 @@ var Courses = require("../models/courses");
 var User = require("../models/user");
 
 exports.createCourse = async (req, res) => {
-  // const another = Courses.findOne({ name: req.body.name });
-  // console.log(another);
-  // console.log("----------------------------------------------------------");
-  // if (another) res.send("this name is already taken");
-  // const arrayOfSlots = Courses.find({});
-  // //console.log(arrayOfSlots);
+  const another = await Courses.findOne({ name: req.body.name });
+  if (another) return res.send("this name is already taken");
   const course = await Courses.create(req.body);
   const instructor = await User.findOneAndUpdate(
     { _id: course.instructor },
     { $push: { courses: course._id } }
   );
-  res.json({ instructor: instructor }), { course: course };
+  return res.json({ course: course });
 };
 exports.deleteCourse = async (req, res) => {
   const courseId = req.params.id;

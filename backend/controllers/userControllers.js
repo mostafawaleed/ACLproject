@@ -1,25 +1,39 @@
 const User = require("../models/user");
 
 exports.createUser = (req, res) => {
-  User.create(req.body)
+  User.findOne({ username: req.body.username })
     .then(user => {
-      console.log(user);
-      return res.json({ data: user });
+      if (user) return res.send("this username is already taken");
+      User.create(req.body)
+        .then(user => {
+          console.log(user);
+          return res.json({ data: user });
+        })
+        .catch(err => {
+          console.log(err);
+          return res.sendStatus(500);
+        });
     })
     .catch(err => {
-      console.log(err);
-      res.sendStatus(500);
+      return res.status(500).send(err.body);
     });
 };
 exports.updateUser = (req, res) => {
-  User.findByIdAndUpdate(req.params.id, req.body, { new: false })
+  User.findOne(req.body.username)
     .then(user => {
-      if (!user) return res.status(404).send("User not found");
-      return res.json({ msg: "User updated", data: user });
+      if (user) return res.send("this username is already taken");
+      User.findByIdAndUpdate(req.params.id, req.body, { new: false })
+        .then(user => {
+          if (!user) return res.status(404).send("User not found");
+          return res.json({ msg: "User updated", data: user });
+        })
+        .catch(err => {
+          console.log(err);
+          return res.sendStatus(500);
+        });
     })
-    .catch(err => {
-      console.log(err);
-      return res.sendStatus(500);
+    .then(err => {
+      return res.status(500).send(err);
     });
 };
 exports.deleteUser = (req, res) => {

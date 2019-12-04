@@ -30,13 +30,13 @@ class navigationbar extends Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link>Home</Nav.Link>
-              <Nav.Link>Add Course</Nav.Link>
-              <Nav.Link>Select Slots</Nav.Link>
-              <Nav.Link>View Schedule</Nav.Link>
+              <Nav.Link href="/">Home</Nav.Link>
+              <Nav.Link href="/add-course">Add Course</Nav.Link>
+              <Nav.Link href="/select-slots">Select Slots</Nav.Link>
+              <Nav.Link href="/schedule">View Schedule</Nav.Link>
             </Nav>
             <Nav>
-              <Nav.Link>Logout</Nav.Link>
+              <Nav.Link href="/logout">Logout</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>

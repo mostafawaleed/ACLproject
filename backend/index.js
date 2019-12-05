@@ -15,11 +15,11 @@ mongoose
   })
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
-
+app.use(cors());
 const user = require("./routes/api/user");
 const course = require("./routes/api/course");
 const slot = require("./routes/api/slot");
-app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

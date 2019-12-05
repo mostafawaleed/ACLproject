@@ -1,26 +1,28 @@
 const Slots = require("../models/slot");
 
 exports.createSlot = (req, res) => {
+  console.log(req.body);
   Slots.findOne({
     location: req.body.location,
     startTime: req.body.startTime
   })
     .then(another => {
-      if (another) res.send("this is slot is already occupied");
+      if (another)
+        return res.status(400).send("this is slot is already occupied");
       Slots.create(req.body)
         .then(slot => {
           if (!slot)
-            res
+            return res
               .status(500)
               .send({ err: "error happened while creating the slot" });
           res.json(slot);
         })
         .catch(err => {
-          res.json(err.body);
+          res.status(500).json(err.body);
         });
     })
     .catch(err => {
-      res.status(500).send(err.body);
+      res.status(500).json(err.body);
     });
 };
 exports.findSlot = (req, res) => {

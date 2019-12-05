@@ -1,12 +1,8 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import logo from "./logo.svg";
 import "./App.css";
+import courseCreation from "./components/layout/courseCreation";
 import { Button } from "react-bootstrap";
 import Navigationbar from "./components/layout/navBar";
 
@@ -16,9 +12,8 @@ function App() {
       <Router>
         <div>
           <Navigationbar />
-          <Switch>
-          </Switch>
         </div>
+        <Route exact path="/add-course" component={courseCreation} />
       </Router>
     </div>
   );

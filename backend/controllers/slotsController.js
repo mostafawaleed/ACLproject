@@ -13,7 +13,7 @@ exports.createSlot = (req, res) => {
         .then(slot => {
           if (!slot)
             return res
-              .status(500)
+              .status(400)
               .send({ err: "error happened while creating the slot" });
           res.json(slot);
         })

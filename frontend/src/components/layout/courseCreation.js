@@ -26,7 +26,7 @@ class CourseCreate extends Component {
   };
   componentDidMount() {
     axios
-      .get("https://api.mockaroo.com/api/cd7d21e0?count=50&key=78e63b20")
+      .get("http://localhost:3002/api/course")
       .then(courseinfo => {
         this.setState({ courseinfo: courseinfo.data });
       });
@@ -57,30 +57,31 @@ class CourseCreate extends Component {
                 slotCapacity: this.state.cap3
               })
               .then(slot3 => {
-                axios
-                  .post("http://localhost:3001/api/course", {
-                    name: this.state.name,
-                    instructor: localStorage.getItem("username"),
-                    creditHours: this.state.credithours,
-                    Slots: [slot1.data._id, slot2.data._id, slot3.data._id]
-                  })
-                  .then(s => {
-                    this.setState({ done: 1 });
-                  })
-                  .catch(e => {
-                    this.setState({ error: e });
-                  });
+                axios.post("http://localhost:3001/api/course", {
+                  name: this.state.name,
+                  instructor: localStorage.getItem("id"),
+                  creditHours: this.state.credithours,
+                  Slots: [slot1.data._id, slot2.data._id, slot3.data._id]
+                })
+                .catch(err => {
+                  console.log(err.body);
+                });
+              })
+              .catch(err => {
+                console.log(err.body);
               });
+          })
+          .catch(err => {
+            console.log(err.body);
           });
       })
-      .catch(e => {
-        this.setState({ error: e });
+      .catch(err => {
+        console.log(err.body);
       });
   };
   render() {
     return (
       <Container>
-        ]
         <span
           style={{ fontSize: 30, fontWeight: "italic", color: "steelblue " }}
           className="badge"

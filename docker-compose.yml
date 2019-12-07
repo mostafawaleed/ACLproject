@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    build: frontend
+    ports:
+      - "3000:3000"
+  mongodb:
+    build: backend
+    ports:
+      - "3001:3001"
+  mockaroo:
+    build: mockaroo
+    ports:
+      - "3002:3002"

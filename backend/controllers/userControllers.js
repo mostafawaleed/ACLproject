@@ -58,3 +58,14 @@ exports.getUser = (req, res) => {
       return res.sendStatus(500);
     });
 };
+exports.getUserbyusername = (req, res) => {
+  User.findOne({ username: req.body.username })
+    .then(user => {
+      if (!user) return res.status(404).send("User not found");
+      return res.json(user._id);
+    })
+    .catch(err => {
+      console.log(err);
+      return res.sendStatus(500);
+    });
+};

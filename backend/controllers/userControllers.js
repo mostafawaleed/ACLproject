@@ -4,7 +4,7 @@ const Slots = require("../models/slot");
 exports.createUser = (req, res) => {
   User.findOne({ username: req.body.username })
     .then(user => {
-      if (user) return res.send("this username is already taken");
+      if (user) return res.status(400).json("This username is already taken");
       User.create(req.body)
         .then(user => {
           console.log(user);

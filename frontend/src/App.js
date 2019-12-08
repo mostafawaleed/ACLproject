@@ -8,6 +8,7 @@ import Navigationbar from "./components/layout/navBar";
 import LoginForm from "./components/layout/login";
 import SelectSlots from "./components/layout/selectSlots";
 import Schedule from "./components/layout/schedule";
+import RegisterForm from "./components/layout/register";
 
 class App extends React.Component {
   state = {
@@ -50,7 +51,8 @@ class App extends React.Component {
               }
               {!this.state.loggedIn &&
                 <Switch>
-                  <Route path="/" component={LoginForm} />
+                  <Route exact path="/" component={LoginForm} />
+                  <Route exact path="/register" component={RegisterForm} />
                 </Switch>
               }
             </Container>

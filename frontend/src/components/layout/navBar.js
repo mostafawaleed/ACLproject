@@ -13,6 +13,7 @@ class navigationbar extends Component {
   }
 
   logout() {
+    localStorage.removeItem('id');
     localStorage.removeItem('username');
     localStorage.removeItem('type');
     window.location.reload();
@@ -28,9 +29,13 @@ class navigationbar extends Component {
             {this.props.loggedIn && <>
               <Nav className="mr-auto">
                 <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/add-course">Add Course</Nav.Link>
-                <Nav.Link href="/select-slots">Select Slots</Nav.Link>
-                <Nav.Link href="/schedule">View Schedule</Nav.Link>
+                {this.props.userType == 'instructor' && <>
+                  <Nav.Link href="/add-course">Add Course</Nav.Link>
+                </>}
+                {this.props.userType == 'student' && <>
+                  <Nav.Link href="/select-slots">Select Slots</Nav.Link>
+                  <Nav.Link href="/schedule">View Schedule</Nav.Link>
+                </>}
               </Nav>
               <Nav>
                 <Nav.Link href="/" onClick={() => this.logout()}>Logout</Nav.Link>

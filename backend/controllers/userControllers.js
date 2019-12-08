@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Slots = require("../models/slot");
 
 exports.createUser = (req, res) => {
   User.findOne({ username: req.body.username })
@@ -48,7 +49,7 @@ exports.deleteUser = (req, res) => {
     });
 };
 exports.getUser = (req, res) => {
-  User.findById(req.params.id)
+  User.findById(req.params.id).populate('enrolledSlots.course').populate('enrolledSlots.slot')
     .then(user => {
       if (!user) return res.status(404).send("User not found");
       return res.json(user);
@@ -68,4 +69,18 @@ exports.getUserbyusername = (req, res) => {
       console.log(err);
       return res.sendStatus(500);
     });
+};
+
+exports.enrollUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.body.user, {
+      $push: {enrolledSlots: {course: req.body.course, slot: req.body.slot}}
+    });
+    await Slots.findByIdAndUpdate(req.body.slot, {
+      $inc: {slotCapacity: -1}
+    });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json(err.body);
+  }
 };

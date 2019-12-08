@@ -23,7 +23,17 @@ const UserSchema = new Schema({
       type: Schema.ObjectId,
       ref: "course"
     }
-  ]
+  ],
+  enrolledSlots: [new Schema({
+    course: {
+      type: Schema.ObjectId,
+      ref: "course"
+    },
+    slot: {
+      type: Schema.ObjectId,
+      ref: "slots"
+    }
+  }, { noId: true })]
 });
 var User = mongoose.model("user", UserSchema);
 module.exports = User;

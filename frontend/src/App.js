@@ -6,6 +6,8 @@ import courseCreation from "./components/layout/courseCreation";
 import { Button, Container } from "react-bootstrap";
 import Navigationbar from "./components/layout/navBar";
 import LoginForm from "./components/layout/login";
+import SelectSlots from "./components/layout/selectSlots";
+import Schedule from "./components/layout/schedule";
 
 class App extends React.Component {
   state = {
@@ -37,11 +39,13 @@ class App extends React.Component {
       <div className="App">
         <Router>
           <div>
-            <Navigationbar loggedIn={this.state.loggedIn} />
+            <Navigationbar loggedIn={this.state.loggedIn} userType={this.state.type} />
             <Container>
               {this.state.loggedIn &&
                 <Switch>
                   <Route exact path="/add-course" component={courseCreation} />
+                  <Route exact path="/select-slots" component={SelectSlots} />
+                  <Route exact path="/schedule" component={Schedule} />
                 </Switch>
               }
               {!this.state.loggedIn &&

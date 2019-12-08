@@ -1,6 +1,15 @@
 var Courses = require("../models/courses");
 var User = require("../models/user");
 
+exports.getAllCourses = async (req, res) => {
+  try {
+    const courses = await Courses.find().populate('Slots');
+    return res.json(courses);
+  } catch (err) {
+    return res.sendStatus(500);
+  }
+};
+
 exports.createCourse = async (req, res) => {
   const another = await Courses.findOne({ name: req.body.name });
   if (another) return res.send("this name is already taken");
